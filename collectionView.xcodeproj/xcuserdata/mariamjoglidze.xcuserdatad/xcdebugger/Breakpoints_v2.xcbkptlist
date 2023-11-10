@@ -3,4 +3,54 @@
    uuid = "5D64A3B4-7B7E-4D47-9694-9426E6591343"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E4E5EA96-2594-4E8D-860F-C15B4AF17F90"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "collectionView/Scenes/DetailsViewController/DetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "loadImageForMovie(_:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E4E5EA96-2594-4E8D-860F-C15B4AF17F90 - 654dded0e7cd2500"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "collectionView.DetailsViewController.loadImageForMovie(_: collectionView.MovieResults, completion: (Swift.Optional&lt;__C.UIImage&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "collectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariamjoglidze/Desktop/TBC%20Academy/19.CollectionView/collectionView%20%20HomeWork/collectionView/Scenes/DetailsViewController/DetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "1160">
+               </Location>
+               <Location
+                  uuid = "E4E5EA96-2594-4E8D-860F-C15B4AF17F90 - 654dded0e7cd2500"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "collectionView.DetailsViewController.loadImageForMovie(_: collectionView.MovieResults, completion: (Swift.Optional&lt;__C.UIImage&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "collectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariamjoglidze/Desktop/TBC%20Academy/19.CollectionView/collectionView%20%20HomeWork/collectionView/Scenes/DetailsViewController/DetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "1236">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

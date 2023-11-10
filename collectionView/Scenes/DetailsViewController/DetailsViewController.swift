@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-    private let imageStackView: UIStackView = {
+    private var imageStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -104,7 +104,7 @@ class DetailsViewController: UIViewController {
         return button
     }()
     
-    var movie: Movie?
+ var movieResponse: MovieResults?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,6 +113,7 @@ class DetailsViewController: UIViewController {
         setUpNavBar()
         setupUI()
     }
+    
     func setupUI() {
         setupImageStackView()
         setupfirstStackView()
@@ -140,13 +141,43 @@ class DetailsViewController: UIViewController {
             imageStackView.heightAnchor.constraint(equalToConstant: 210)
         ])
         
-        let imageView = UIImageView(image: UIImage(named: "Video"))
-        imageView.contentMode = .scaleAspectFill
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
         imageStackView.addArrangedSubview(imageView)
+        loadImageForMovie(movieResponse!) {(image) in
+            imageView.image = image
+            
+        }
+        
     }
     
+    func loadImageForMovie(_ movie: MovieResults, completion: @escaping (UIImage?) -> Void) {
+        let imageUrlString = "https://image.tmdb.org/t/p/w342/\(movie.image)"
+        guard let imageUrl = URL(string: imageUrlString) else {
+            completion(nil)
+            return
+        }
+        if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: imageUrl)) {
+            let data = cachedResponse.data
+            let image = UIImage(data: data)
+            completion(image)
+        } else {
+            URLSession.shared.dataTask(with: URLRequest(url: imageUrl)) { (data, response, error) in
+                if let data = data {
+                    let cachedResponse = CachedURLResponse(response: response!, data: data)
+                    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: imageUrl))
+                    
+                    let image = UIImage(data: data)
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }.resume()
+        }
+    }
+
     func setupfirstStackView() {
         view.addSubview(firstStackView)
         
@@ -158,7 +189,7 @@ class DetailsViewController: UIViewController {
         ])
         
         let ratingLabel = UILabel()
-        ratingLabel.text = "8.3"
+        ratingLabel.text = "\(String(describing: movieResponse?.rate))"
         ratingLabel.textColor = .white
         firstStackView.addArrangedSubview(ratingLabel)
 
@@ -182,7 +213,7 @@ class DetailsViewController: UIViewController {
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "When the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the city's hidden corruption and question his family's involvement."
+        label.text = movieResponse?.overview
         label.numberOfLines = 0
         label.font = label.font.withSize(14)
         label.textColor = .white
@@ -213,7 +244,7 @@ class DetailsViewController: UIViewController {
         thirdStackView.addArrangedSubview(CertificateLabel)
         
         let ageLabel = UILabel()
-        ageLabel.text = "16+"
+        ageLabel.text = "\(String(describing: movieResponse!.rate))"
         ageLabel.font = ageLabel.font.withSize(14)
         
         ageLabel.textColor = .white
@@ -236,7 +267,7 @@ class DetailsViewController: UIViewController {
         fourthStackView.addArrangedSubview(runTime)
 
         let time = UILabel()
-        time.text = "02:56"
+        time.text = "\(String(describing: movieResponse!.popularity))"
         time.textColor = .white
         time.font = time.font.withSize(14)
         fourthStackView.addArrangedSubview(time)
@@ -258,7 +289,7 @@ class DetailsViewController: UIViewController {
         fifthStackView.addArrangedSubview(release)
         
         let releaseDate = UILabel()
-        releaseDate.text = "2022"
+        releaseDate.text = movieResponse?.title
         releaseDate.font = releaseDate.font.withSize(14)
         releaseDate.textColor = .white
         fifthStackView.addArrangedSubview(releaseDate)
@@ -280,7 +311,7 @@ class DetailsViewController: UIViewController {
         sixthStackView.addArrangedSubview(genre)
         
         let variousGenre = UILabel()
-        variousGenre.text = "Action, Crime, Drama"
+        variousGenre.text = movieResponse?.language
         variousGenre.textColor = .white
         variousGenre.font = variousGenre.font.withSize(14)
         sixthStackView.addArrangedSubview(variousGenre)
@@ -302,7 +333,7 @@ class DetailsViewController: UIViewController {
         sevenththStackView.addArrangedSubview(director)
         
         let directorName = UILabel()
-        directorName.text = "Matt Reeves"
+        directorName.text = "\(String(describing: movieResponse!.voteCount))"
         directorName.textColor = .white
         directorName.font = directorName.font.withSize(14)
         sevenththStackView.addArrangedSubview(directorName)
@@ -324,7 +355,7 @@ class DetailsViewController: UIViewController {
         eighthStackView.addArrangedSubview(cast)
         
         let castName = UILabel()
-        castName.text = "Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano, John Turturro, Andy Serkis, Peter Sarsgaard"
+        castName.text = movieResponse?.title
         castName.numberOfLines = 0
         castName.font = castName.font.withSize(14)
         castName.textColor = .white

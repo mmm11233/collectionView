@@ -9,7 +9,7 @@ import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
     
-    let image: UIImageView = {
+    var imageView: UIImageView = {
         let image = UIImageView()
         return image
     }()
@@ -36,8 +36,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,31 +43,31 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(image)
-        image.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            image.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            image.heightAnchor.constraint(equalToConstant: 230)
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 230)
         ])
         
         contentView.addSubview(titleLabel)
-        titleLabel.font = UIFont(name: "Helvetica-Bold", size: 18)
+        titleLabel.font = UIFont(name: "Helvetica-Bold", size: 13)
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 4),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0)
         ])
         
         contentView.addSubview(genreLabel)
-        genreLabel.font = UIFont(name: "Helvetica", size: 16)
+        genreLabel.font = UIFont(name: "Helvetica", size: 13)
         genreLabel.textColor = .white
         genreLabel.translatesAutoresizingMaskIntoConstraints = false
         

@@ -36,13 +36,23 @@ class HomeViewController: UIViewController{
         return collectionView
     }()
     
-    var movies = Movie.dummyData
+    private var movieServise: MovieService?
+    var movies: [MovieResults] = []
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hexStringExtension: "#1F293D")
         setupNavigationBar()
         setupUI()
+        
+        movieServise = MovieService(webServiceManager: WebServiceManger())
+        movieServise?.fetchMovies({ movies in
+            self.movies = movies
+            DispatchQueue.main.async {
+            self.moviesCollectionView.reloadData()
+            }
+        })
     }
     
     // MARK: - Private Methods
@@ -96,7 +106,7 @@ class HomeViewController: UIViewController{
         moviesCollectionView.reloadData()
     }
     
-    func createHeaderView() -> UIView {
+  private  func createHeaderView() -> UIView {
           let headerView = UIView()
           headerView.backgroundColor = .clear
 
@@ -116,6 +126,29 @@ class HomeViewController: UIViewController{
           ])
           return headerView
       }
+    
+    private func fetchMovies() {
+        guard let url = URL(string: "https://developers.themoviedb.org/3/movies/get-popular-movies") else {
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let MovieResponse = try JSONDecoder().decode(MovieResponse.self, from: data)
+                print(MovieResponse)
+                
+                self.movies = MovieResponse.results
+                DispatchQueue.main.async {
+                    self.moviesCollectionView.reloadData()
+                }
+            } catch let error {
+                print(error)
+            }
+        }.resume()
+    }
 }
 
 

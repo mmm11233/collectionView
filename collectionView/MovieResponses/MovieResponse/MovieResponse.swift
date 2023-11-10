@@ -6,3 +6,11 @@
 //
 
 import Foundation
+struct MovieResponse: Decodable {
+    
+    let results: [MovieResults]
+    
+    enum CodingKeys: String, CodingKey {
+        case results
+    }
+}
